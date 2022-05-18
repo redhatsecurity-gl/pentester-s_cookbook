@@ -1,0 +1,158 @@
+
+ADB $ ADB SHELL CHEATSHEET
+adb help // List all comands
+== Adb Server
+adb kill-server
+adb start-server
+== Adb Reboot
+adb reboot
+adb reboot recovery
+adb reboot-bootloader
+adb root //restarts adb with root permissions
+== Shell
+adb shell // Open or run commands in a terminal on the host Android device.
+== Devices
+adb usb
+adb devices //show devices attached
+adb devices -l //devices (product/model)
+adb connect ip_address_of_device
+== Get device android version
+adb shell getprop ro.build.version.release
+== LogCat
+adb logcat
+adb logcat -c // clear // The parameter -c will clear the current logs on the device.
+adb logcat -d > [path_to_file] // Save the logcat output to a file on the local system.
+adb bugreport > [path_to_file] // Will dump the whole device information like dumpstate, dumpsys
+and logcat output.
+== Files
+adb push [source] [destination] // Copy files from your computer to your phone.
+adb pull [device file location] [local file location] // Copy files from your phone to your computer.
+== App install
+adb -e install path/to/app.apk
+-d - directs command to the only connected USB device...
+-e - directs command to the only running emulator...
+-s <serial number> ...
+-p <product name or path> ...
+The flag you decide to use has to come before the actual adb command:
+adb devices | tail -n +2 | cut -sf 1 | xargs -IX adb -s X install -r com.myAppPackage // Install the given
+app on all connected devices.
+== Uninstalling app from device
+adb uninstall com.myAppPackage
+adb uninstall <app .apk name>
+adb uninstall -k <app .apk name> -> "Uninstall .apk withour deleting data"
+adb shell pm uninstall com.example.MyApp
+adb shell pm clear [package] // Deletes all data associated with a package.
+2/8
+adb devices | tail -n +2 | cut -sf 1 | xargs -IX adb -s X uninstall com.myAppPackage //Uninstall the
+given app from all connected devices
+== Update app
+adb install -r yourApp.apk // -r means re-install the app and keep its data on the device.
+adb install –k <.apk file path on computer>
+== Home button
+adb shell am start -W -c android.intent.category.HOME -a android.intent.action.MAIN
+== Activity Manager
+adb shell am start -a android.intent.action.VIEW
+adb shell am broadcast -a 'my_action'
+adb shell am start -a android.intent.action.CALL -d tel:+972527300294 // Make a call
+// Open send sms screen with phone number and the message:
+adb shell am start -a android.intent.action.SENDTO -d sms:+972527300294 --es sms_body "Test --
+ez exit_on_sent false
+// Reset permissions
+adb shell pm reset-permissions -p your.app.package
+adb shell pm grant [packageName] [ Permission] // Grant a permission to an app.
+adb shell pm revoke [packageName] [ Permission] // Revoke a permission from an app.
+// Emulate device
+adb shell wm size 2048x1536
+adb shell wm density 288
+// And reset to default
+adb shell wm size reset
+adb shell wm density reset
+== Print text
+adb shell input text 'Wow, it so cool feature'
+== Screenshot
+adb shell screencap -p /sdcard/screenshot.png
+$ adb shell
+shell@ $ screencap /sdcard/screen.png
+shell@ $ exit
+$ adb pull /sdcard/screen.png
+---
+adb shell screenrecord /sdcard/NotAbleToLogin.mp4
+$ adb shell
+shell@ $ screenrecord --verbose /sdcard/demo.mp4
+(press Control + C to stop)
+shell@ $ exit
+$ adb pull /sdcard/demo.mp4
+== Key event
+adb shell input keyevent 3 // Home btn
+adb shell input keyevent 4 // Back btn
+3/8
+adb shell input keyevent 5 // Call
+adb shell input keyevent 6 // End call
+adb shell input keyevent 26 // Turn Android device ON and OFF. It will toggle device to on/off status.
+adb shell input keyevent 27 // Camera
+adb shell input keyevent 64 // Open browser
+adb shell input keyevent 66 // Enter
+adb shell input keyevent 67 // Delete (backspace)
+adb shell input keyevent 207 // Contacts
+adb shell input keyevent 220 / 221 // Brightness down/up
+adb shell input keyevent 277 / 278 /279 // Cut/Copy/Paste
+0 --> "KEYCODE_0"
+1 --> "KEYCODE_SOFT_LEFT"
+2 --> "KEYCODE_SOFT_RIGHT"
+3 --> "KEYCODE_HOME"
+4 --> "KEYCODE_BACK"
+5 --> "KEYCODE_CALL"
+6 --> "KEYCODE_ENDCALL"
+7 --> "KEYCODE_0"
+8 --> "KEYCODE_1"
+9 --> "KEYCODE_2"
+10 --> "KEYCODE_3"
+11 --> "KEYCODE_4"
+12 --> "KEYCODE_5"
+13 --> "KEYCODE_6"
+14 --> "KEYCODE_7"
+15 --> "KEYCODE_8"
+16 --> "KEYCODE_9"
+17 --> "KEYCODE_STAR"
+18 --> "KEYCODE_POUND"
+19 --> "KEYCODE_DPAD_UP"
+20 --> "KEYCODE_DPAD_DOWN"
+21 --> "KEYCODE_DPAD_LEFT"
+22 --> "KEYCODE_DPAD_RIGHT"
+23 --> "KEYCODE_DPAD_CENTER"
+24 --> "KEYCODE_VOLUME_UP"
+25 --> "KEYCODE_VOLUME_DOWN"
+26 --> "KEYCODE_POWER"
+27 --> "KEYCODE_CAMERA"
+28 --> "KEYCODE_CLEAR"
+29 --> "KEYCODE_A"
+30 --> "KEYCODE_B"
+31 --> "KEYCODE_C"
+32 --> "KEYCODE_D"
+33 --> "KEYCODE_E"
+34 --> "KEYCODE_F"
+35 --> "KEYCODE_G"
+36 --> "KEYCODE_H"
+37 --> "KEYCODE_I"
+38 --> "KEYCODE_J"
+39 --> "KEYCODE_K"
+40 --> "KEYCODE_L"
+41 --> "KEYCODE_M"
+42 --> "KEYCODE_N"
+43 --> "KEYCODE_O"
+44 --> "KEYCODE_P"
+45 --> "KEYCODE_Q"
+
+
+
+
+
+
+
+
+
+
+        
+      
+             
+       
